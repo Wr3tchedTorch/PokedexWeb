@@ -13,11 +13,9 @@ const MyAccordion = (props: Props) => {
   return (
     <Accordion defaultActiveKey="0" data-bs-theme="dark">
       {props.propArray.map((accordion, key) => (
-        <Accordion.Item eventKey={"" + key}>
+        <Accordion.Item eventKey={"" + key} key={key}>
           <Accordion.Header>{accordion.title}</Accordion.Header>
-          <Accordion.Body>
-            {accordion.message}
-          </Accordion.Body>
+          <Accordion.Body>{accordion.message}</Accordion.Body>
         </Accordion.Item>
       ))}
     </Accordion>

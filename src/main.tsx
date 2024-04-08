@@ -1,11 +1,17 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import "./assets/css/index.css"
-import "bootstrap/dist/css/bootstrap.min.css"
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+import "./assets/css/index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+    <BrowserRouter>
+      <Routes>
+        <Route path="/*" element={<App />} />
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
+);

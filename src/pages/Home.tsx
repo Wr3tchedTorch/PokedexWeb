@@ -2,6 +2,7 @@ import Accordion from "../components/Accordion";
 import CardsContainer from "../components/CardsContainer";
 import Card from "../components/Card";
 import Carousel from "../components/Carousel";
+import transition from "../Transition";
 
 const Home = () => {
   return (
@@ -72,4 +73,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default transition(Home);

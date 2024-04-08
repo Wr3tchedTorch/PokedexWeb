@@ -1,28 +1,16 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import "../assets/css/pokemon.css"
 
-interface Props {
+interface Card {
   title: string;
   image: string;
-  types: string[];
+  types: object[];
 }
 
-function getTypeColor(type: string) {
-  switch (type) {
-    case "fire":
-      return "danger";
-    case "water":
-      return "primary";
-    case "grass":
-      return "success";
-    default:
-      return "warning";
-  }
-}
-
-const myCard = (props: Props) => {
+const myCard = (props: Card) => {  
   return (
-    <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
+    <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center" data-aos="zoom-in-up">
       <Card data-bs-theme="dark" className="card-width">
         <Card.Img
           variant="top"
@@ -31,9 +19,9 @@ const myCard = (props: Props) => {
         />
         <Card.Body>
           <Card.Title>{props.title}</Card.Title>
-          {props.types.map((type, index) => (
-            <Button variant={getTypeColor(type)} className="m-1" key={index}>
-              {type}
+          {props.types.map((pokemonType: any, index) => (
+            <Button className={"m-1 " + pokemonType.type.name} key={index}>
+              {pokemonType.type.name}
             </Button>
           ))}
         </Card.Body>

@@ -1,37 +1,40 @@
 import { useEffect, useRef, useState } from "react";
-import CardsContainer from "../components/CardsContainer";
-import PokemonCard from "../components/PokemonCard";
 import axios from "axios";
+import transition from "../Transition";
+import PokedexBody from "../components/PokedexBody";
 
 const Pokedex = () => {
-  var pokemonList: string[] = [];
-  const [getPokemon, setPokemon] = useState<string[]>([]);
+  const [getOriginalPokemonList, setOriginalPokemonList] = useState<string[]>(
+    []
+  );
+
   const hasFetchedData = useRef(false);
 
-  const fetchPokemonList = () => {
-    axios({
-      method: "get",
-      url: "https://pokeapi.co/api/v2/pokemon?limit=500",
-      responseType: "stream",
-    }).then((response) => {
-      Array.from(JSON.parse(response.data).results).forEach((result: any) => {
-        fetchPokemon(result.url);
-      });
-    });
-  };
-
-  const fetchPokemon = (pokemonUrl: string) => {
-    axios({
-      method: "get",
-      url: pokemonUrl,
-      responseType: "stream",
-    }).then((response) => {
-      setPokemon((prevArray) => [...prevArray, response.data]);
-    });
-  };
-
   useEffect(() => {
+    const fetchPokemonList = () => {
+      axios({
+        method: "get",
+        url: "https://pokeapi.co/api/v2/pokemon?limit=300",
+        responseType: "stream",
+      }).then((response) => {
+        Array.from(JSON.parse(response.data).results).forEach((result: any) => {
+          fetchPokemon(result.url);
+        });
+      });
+    };
+
+    const fetchPokemon = (pokemonUrl: string) => {
+      axios({
+        method: "get",
+        url: pokemonUrl,
+        responseType: "stream",
+      }).then((response) => {
+        setOriginalPokemonList((prevArray) => [...prevArray, response.data]);
+      });
+    };
+
     if (hasFetchedData.current === false) {
+      console.log("FetchingPokemonList");
       fetchPokemonList();
       hasFetchedData.current = true;
     }
@@ -39,18 +42,9 @@ const Pokedex = () => {
 
   return (
     <>
-      <CardsContainer>
-        {getPokemon.map((pokemon: any, index) => (
-          <PokemonCard
-            title={JSON.parse(pokemon).name}
-            image={JSON.parse(pokemon).sprites.front_default}
-            types={["fire"]}
-            key={index}
-          />
-        ))}
-      </CardsContainer>
+      <PokedexBody originalList={getOriginalPokemonList} />
     </>
   );
 };
 
-export default Pokedex;
+export default transition(Pokedex);
