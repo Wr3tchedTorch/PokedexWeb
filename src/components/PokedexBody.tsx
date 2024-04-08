@@ -17,8 +17,6 @@ const PokedexBody = ({ originalList }: Props) => {
     setPokemonList(originalList);
   }, []);
 
-  console.log("budna");
-
   var indexOfLastPost = currentPage * postsPerPage;
   var indexOfFirstPost = indexOfLastPost - postsPerPage;
   var currentPosts = getPokemonList.slice(indexOfFirstPost, indexOfLastPost);
